@@ -54,6 +54,11 @@ function doAjaxSubmit(e) {
             jqXHR = data;
         }
         replaceDocument(jqXHR.responseText);
+        try {
+            history.replaceState({}, '', url);
+        } catch(err) {
+            window.location = url;
+        }
     });
     return ret;
 }

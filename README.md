@@ -3,8 +3,6 @@
 Adds support for PUT, PATCH and DELETE methods in HTML forms.
 Adds support for JSON and other content types in HTML forms.
 
-**TODO**: Handle resulting location via history API
-
 ## Requirements
 
 jQuery 1.9+

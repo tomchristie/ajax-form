@@ -8,9 +8,15 @@
 <body>
     <div>
         <h2>PUT</h2>
-        <form action="." data-method="PUT">  <!-- enctype='multipart/form-data' -->
-            <!-- <label>content type</label><input name='_content_type' value='application/json'/>
-            <label>content</label><input name='_content' value='{}'/> -->
+        <form action="/" data-method="PUT">
+            <input name='example1'/>
+            <input name='example2'/>
+            <input type="submit"/>
+        </form>
+    </div>
+    <div>
+        <h2>PUT to different URL</h2>
+        <form action="/foo" data-method="PUT">
             <input name='example1'/>
             <input name='example2'/>
             <input type="submit"/>
@@ -18,9 +24,7 @@
     </div>
     <div>
         <h2>Multipart PUT</h2>
-        <form action="." data-method="PUT" enctype='multipart/form-data'>  <!-- enctype='multipart/form-data' -->
-            <!-- <label>content type</label><input name='_content_type' value='application/json'/>
-            <label>content</label><input name='_content' value='{}'/> -->
+        <form action="/" data-method="PUT" enctype='multipart/form-data'>
             <input name='example1' type='file'/>
             <input name='example2'/>
             <input type="submit"/>
@@ -28,7 +32,7 @@
     </div>
     <div>
         <h2>PUT with JSON ContentType</h2>
-        <form action="." data-method="PUT">
+        <form action="/" data-method="PUT">
             <input name='_content_type' value='application/json' type='hidden'/>
             <textarea name='_content'>{}</textarea>
             <input type="submit"/>
