@@ -1,7 +1,7 @@
-# Ajax Form
+# AJAX Form
 
 Adds support for PUT, PATCH and DELETE methods in HTML forms.
-Adds support for JSON and other content types in HTML forms.
+Adds support for submitting JSON and other content types in HTML forms.
 
 ## Requirements
 
@@ -15,9 +15,9 @@ jQuery 1.9+
 
 ## Usage - PUT, PATCH, DELETE
 
-    <form action="." data-method="PUT">
-        <input name='a'/>
-        <input name='b'/>
+    <form action="/" data-method="PUT">
+        <input name='foo'/>
+        <input name='bar'/>
         <input type="submit"/>
     </form>
     <script>
@@ -28,7 +28,7 @@ jQuery 1.9+
 
 ## Usage - Content type
 
-    <form action="." method="POST">
+    <form action="/" method="POST">
         <input name='_content_type'/>
         <input name='_content'/>
         <input type="submit"/>
