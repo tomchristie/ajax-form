@@ -1,0 +1,43 @@
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- <script src="http://malsup.github.com/jquery.form.js"></script> -->
+    <script src="ajax_form.js"></script>
+    <title>Example</title>
+</head>
+<body>
+    <div>
+        <h2>PUT</h2>
+        <form action="." data-method="PUT">  <!-- enctype='multipart/form-data' -->
+            <!-- <label>content type</label><input name='_content_type' value='application/json'/>
+            <label>content</label><input name='_content' value='{}'/> -->
+            <input name='example1'/>
+            <input name='example2'/>
+            <input type="submit"/>
+        </form>
+    </div>
+    <div>
+        <h2>Multipart PUT</h2>
+        <form action="." data-method="PUT" enctype='multipart/form-data'>  <!-- enctype='multipart/form-data' -->
+            <!-- <label>content type</label><input name='_content_type' value='application/json'/>
+            <label>content</label><input name='_content' value='{}'/> -->
+            <input name='example1' type='file'/>
+            <input name='example2'/>
+            <input type="submit"/>
+        </form>
+    </div>
+    <div>
+        <h2>PUT with JSON ContentType</h2>
+        <form action="." data-method="PUT">
+            <input name='_content_type' value='application/json' type='hidden'/>
+            <textarea name='_content'>{}</textarea>
+            <input type="submit"/>
+        </form>
+    </div>
+    <script>
+    $(document).ready(function() {
+        $('form').ajaxForm();
+    });
+    </script>
+</body>
+</html>
