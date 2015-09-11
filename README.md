@@ -1,7 +1,7 @@
 # AJAX Form
 
-Adds support for PUT, PATCH and DELETE methods in HTML forms.
-Adds support for submitting JSON and other content types in HTML forms.
+* Adds support for PUT, PATCH and DELETE methods in HTML forms.
+* Adds support for submitting JSON and other content types in HTML forms.
 
 ## Requirements
 
