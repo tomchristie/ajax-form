@@ -3,6 +3,8 @@
 * Adds support for PUT, PATCH and DELETE methods in HTML forms.
 * Adds support for submitting JSON and other content types in HTML forms.
 
+See [index.html](https://github.com/tomchristie/ajax-form/blob/master/index.html) for example usage.
+
 ## Requirements
 
 jQuery 1.9+
