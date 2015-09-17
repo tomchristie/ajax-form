@@ -14,7 +14,9 @@ function doAjaxSubmit(e) {
         return;
     }
 
-    var contentType = form.find('input[name=_content_type]').val()
+    var contentType =
+        form.find('input[data-override="content-type"]').val() ||
+        form.find('select[data-override="content-type"] option:selected').text();
     if (method === 'POST' && !contentType) {
         // POST requests can use standard form submits, unless we have
         // overridden the content type.
@@ -27,7 +29,7 @@ function doAjaxSubmit(e) {
     var url = form.attr('action');
     var data;
     if (contentType) {
-        data = form.find('[name=_content]').val() || ''
+        data = form.find('[data-override="content"]').val() || ''
     } else {
         contentType = form.attr('enctype') || form.attr('encoding')
         if (contentType === 'multipart/form-data') {
@@ -35,9 +37,13 @@ function doAjaxSubmit(e) {
                 alert('Your browser does not support AJAX multipart form submissions');
                 return;
             }
-            data = new FormData(form[0])
+            // Use the FormData API and allow the content type to be set automatically,
+            // so it includes the buondary string.
+            // See https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
+            contentType = false;
+            data = new FormData(form[0]);
         } else {
-            contentType = 'application/x-www-form-urlencoded'
+            contentType = 'application/x-www-form-urlencoded; charset=UTF-8'
             data = form.serialize();
         }
     }
@@ -47,7 +53,8 @@ function doAjaxSubmit(e) {
         method: method,
         data: data,
         contentType: contentType,
-        processData: false
+        processData: false,
+        headers: {'Accept': 'text/html; q=1.0, */*'},
     });
     ret.always(function(data, textStatus, jqXHR) {
         if (textStatus != 'success') {

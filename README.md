@@ -15,7 +15,7 @@ jQuery 1.9+
 * Browsers that do not support the history API will result in a subsequent `GET` request.
 * Cross-domain requests will result in a subsequent `GET` request.
 
-## Usage - PUT, PATCH, DELETE
+## Usage - PUT, PATCH, DELETE methods
 
     <form action="/" data-method="PUT">
         <input name='foo'/>
@@ -28,11 +28,14 @@ jQuery 1.9+
         });
     </script>
 
-## Usage - Content type
+## Usage - Content type overriding
+
+* Must include both `content-type` and `content` overrides.
+* The content-type override may be a select or an input control.
 
     <form action="/" method="POST">
-        <input name='_content_type'/>
-        <input name='_content'/>
+        <input data-override="content-type"/>
+        <input data-override="content"/>
         <input type="submit"/>
     </form>
     <script>

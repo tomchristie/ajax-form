@@ -15,12 +15,12 @@ from flask import Flask, Response, request
 app = Flask(__name__, static_url_path='', static_folder='.')
 index = open('index.html', 'r').read()
 
-@app.route('/', methods=['GET', 'POST', 'PUT'])
+@app.route('/', methods=['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
 def index():
     return open('index.html', 'r').read()
 
 
-@app.route('/<path:path>', methods=['GET', 'POST', 'PUT'])
+@app.route('/<path:path>', methods=['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
 def catch_all(path):
     return open('index.html', 'r').read()
 
