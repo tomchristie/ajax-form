@@ -1,5 +1,5 @@
 function replaceDocument(docString) {
-    doc = document.open("text/html");
+    var doc = document.open("text/html");
     doc.write(docString);
     doc.close();
 }
@@ -7,7 +7,8 @@ function replaceDocument(docString) {
 
 function doAjaxSubmit(e) {
     var form = $(this);
-    var method = form.data('method') || form.attr('method') || 'GET';
+    var btn = $(this.clk);
+    var method = btn.data('method') || form.data('method') || form.attr('method') || 'GET';
     method = method.toUpperCase()
     if (method === 'GET') {
         // GET requests can always use standard form submits.
@@ -23,7 +24,7 @@ function doAjaxSubmit(e) {
         return;
     }
 
-    // At this point we're making an AJAX form submission.
+    // At this point we need to make an AJAX form submission.
     e.preventDefault();
 
     var url = form.attr('action');
@@ -38,7 +39,7 @@ function doAjaxSubmit(e) {
                 return;
             }
             // Use the FormData API and allow the content type to be set automatically,
-            // so it includes the buondary string.
+            // so it includes the boundary string.
             // See https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
             contentType = false;
             data = new FormData(form[0]);
@@ -60,10 +61,19 @@ function doAjaxSubmit(e) {
         if (textStatus != 'success') {
             jqXHR = data;
         }
-        replaceDocument(jqXHR.responseText);
-        try {
-            history.replaceState({}, '', url);
-        } catch(err) {
+        var responseContentType = jqXHR.getResponseHeader("content-type") || "";
+        if (responseContentType.toLowerCase().indexOf('text/html') === 0) {
+            replaceDocument(jqXHR.responseText);
+            try {
+                // Modify the location and scroll to top, as if after page load.
+                history.replaceState({}, '', url);
+                scroll(0,0);
+            } catch(err) {
+                // History API not supported, so redirect.
+                window.location = url;
+            }
+        } else {
+            // Not HTML content. We can't open this directly, so redirect.
             window.location = url;
         }
     });
@@ -71,9 +81,17 @@ function doAjaxSubmit(e) {
 }
 
 
+function captureSubmittingElement(e) {
+    var target = e.target;
+    var form = this;
+    form.clk = target;
+}
+
+
 $.fn.ajaxForm = function() {
     var options = {}
     return this
-        .unbind('submit.form-plugin')
+        .unbind('submit.form-plugin  click.form-plugin')
         .bind('submit.form-plugin', options, doAjaxSubmit)
+        .bind('click.form-plugin', options, captureSubmittingElement);
 };
