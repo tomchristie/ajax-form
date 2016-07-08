@@ -49,6 +49,17 @@ function doAjaxSubmit(e) {
         }
     }
 
+    // This is a workaround to access the original xhr object.
+    // We need this to get the final url incase of any redirects.
+    // https://groups.google.com/a/chromium.org/forum/#!msg/blink-dev/AU6pAiYZ8J4/ec5jgoEDsF0J
+    // http://stackoverflow.com/questions/9177252/detecting-a-redirect-in-jquery-ajax
+    var xhr;
+    var _orgAjax = $.ajaxSettings.xhr;
+    $.ajaxSettings.xhr = function () {
+        xhr = _orgAjax();
+        return xhr;
+    };
+
     var ret = $.ajax({
         url: url,
         method: method,
@@ -66,15 +77,15 @@ function doAjaxSubmit(e) {
             replaceDocument(jqXHR.responseText);
             try {
                 // Modify the location and scroll to top, as if after page load.
-                history.replaceState({}, '', url);
+                history.pushState({}, '',  xhr.responseURL);
                 scroll(0,0);
             } catch(err) {
                 // History API not supported, so redirect.
-                window.location = url;
+                window.location = xhr.responseURL;
             }
         } else {
             // Not HTML content. We can't open this directly, so redirect.
-            window.location = url;
+            window.location = xhr.responseURL;
         }
     });
     return ret;
